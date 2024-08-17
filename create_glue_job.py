@@ -4,7 +4,7 @@ glue = boto3.client('glue')
 
 response = glue.create_job(
     Name='LogDataETLJob',
-    Role='arn:aws:iam::637423377183:role/proj5role',  # Replace with your IAM role ARN
+    Role='arn:aws:iam::637423377183:role/proj5role',  
     Command={
         'Name': 'glueetl',
         'ScriptLocation': f's3://user-log-data-bucket/scripts/etl_script.py',

@@ -60,12 +60,24 @@ def create_iam_role(role_name):
                 PolicyArn='arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole'
             )
 
+            # Attach the AWSGlueConsoleFullAccess policy for interacting with AWS Glue
+            iam_client.attach_role_policy(
+                RoleName=role_name,
+                PolicyArn='arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess'
+            )
+
             # Attach the AWSLambdaExecute policy to allow S3 to invoke the Lambda function
             iam_client.attach_role_policy(
                 RoleName=role_name,
                 PolicyArn='arn:aws:iam::aws:policy/AWSLambdaExecute'
             )
 
+            # Attach the AWSGlueServiceRole policy for interacting with Amazon DynamoDb
+            iam_client.attach_role_policy(
+                RoleName=role_name,
+                PolicyArn='arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess'
+            )
+            
             # Attach the CloudWatchFullAccess policy for extended CloudWatch interactions
             iam_client.attach_role_policy(
                 RoleName=role_name,

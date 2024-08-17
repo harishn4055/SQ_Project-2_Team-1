@@ -17,11 +17,4 @@ except ClientError as e:
     else:
         raise e  # Re-raise the exception if it is not a 'BucketAlreadyOwnedByYou' error
 
-# Code to upload a file to a specific folder within the bucket
-file_name = 'enhanced_log_data.json'
-folder_name = 'log_data'
-try:
-    response = s3.upload_file(file_name, bucket_name, f"{folder_name}/{file_name}")
-    print("File uploaded successfully into the log_data folder.")
-except ClientError as e:
-    print(f"Failed to upload file: {e}")
+

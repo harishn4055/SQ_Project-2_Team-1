@@ -33,9 +33,9 @@ def generate_log_entry():
     }
     return json.dumps(log_entry)
 
-log_data = [generate_log_entry() for _ in range(150)]
+log_data = [generate_log_entry() for _ in range(100)]
 
-with open("enhanced_log_data.json", "w") as file:
+with open("log_data_2.json", "w") as file:
     for entry in log_data:
         file.write(entry + "\n")
 

@@ -2,10 +2,11 @@ import boto3
 import zipfile
 import os
 
-# Package the Lambda function
-def create_lambda_zip(function_name, file_name):
+# Package the Lambda function with multiple files or dependencies
+def create_lambda_zip(function_name, file_list):
     with zipfile.ZipFile(f'{function_name}.zip', 'w') as lambda_zip:
-        lambda_zip.write(file_name)
+        for file_name in file_list:
+            lambda_zip.write(file_name)
 
 # Create or update the Lambda function
 def deploy_lambda_function(function_name, zip_file, role_arn, handler_name, runtime='python3.8'):
@@ -37,8 +38,8 @@ def deploy_lambda_function(function_name, zip_file, role_arn, handler_name, runt
                 Role=role_arn,
                 Handler=handler_name,
                 Code=dict(ZipFile=zipped_code),
-                Timeout=30,  # Adjust the timeout as needed
-                MemorySize=128,  # Adjust the memory size as needed
+                Timeout=120,  # Adjust the timeout as needed (increased to 120s)
+                MemorySize=256,  # Adjust the memory size as needed (increased to 256MB)
             )
             print(f'Lambda function {function_name} created successfully.')
 
@@ -47,14 +48,14 @@ def deploy_lambda_function(function_name, zip_file, role_arn, handler_name, runt
 
 # Deployment parameters
 function_name = 'LambdaIngestionFunction'
-file_name = 'upload_to_s3_lambda.py'
+file_list = ['upload_to_s3_lambda.py'] 
 zip_file = f'{function_name}.zip'
 role_arn = 'arn:aws:iam::637423377183:role/proj5role'
 handler_name = 'upload_to_s3_lambda.lambda_handler'
 
 # Create the ZIP package and deploy
-create_lambda_zip(function_name, file_name)
+create_lambda_zip(function_name, file_list)
 deploy_lambda_function(function_name, zip_file, role_arn, handler_name)
 
-# Clean up
+# Clean up only the zip file
 os.remove(zip_file)

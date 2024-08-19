@@ -15,6 +15,6 @@ except ClientError as e:
     if e.response['Error']['Code'] == 'BucketAlreadyOwnedByYou':
         print("Bucket already exists in us-west-1. Uploading file.")
     else:
-        raise e  # Re-raise the exception if it is not a 'BucketAlreadyOwnedByYou' error
+        raise e  
 
 
